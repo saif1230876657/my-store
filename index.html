@@ -1,88 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Firebase Notifications</title>
+  <meta charset="UTF-8">
+  <title>ربح المال 🤑</title>
+
+  <!-- Open Graph for link previews -->
+  <meta property="og:title" content="ربح المال 🤑">
+  <meta property="og:description" content="شارك الرابط واربح 50 جنيه لكل 100 مشاركة!">
+  <meta property="og:image" content="https://i.postimg.cc/d0bCXh3m/Screenshot-680d03679600f7af0b4c700c6b270fe7-2.jpg">
+  <meta property="og:url" content="https://saif1230876657.github.io/my-store/">
+  <meta property="og:type" content="website">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 30px;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    #share-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #progress-container {
+      margin-top: 30px;
+      display: none;
+    }
+    #progress-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .progress-bar {
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 25px;
+      width: 100%;
+    }
+    .progress-fill {
+      background-color: #28a745;
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s;
+    }
+    #money-box {
+      margin-top: 30px;
+      display: none;
+      background-color: #fffae6;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px dashed #ffc107;
+      font-size: 20px;
+      color: #333;
+    }
+    #whatsapp-share {
+      margin-top: 20px;
+      display: none;
+    }
+    #whatsapp-share a {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Firebase Notifications Test</h1>
 
-  <script type="module">
-    // إنشاء ملف service worker تلقائيًا (مرة واحدة فقط)
-    const swCode = `
-      importScripts('https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js');
-      importScripts('https://www.gstatic.com/firebasejs/11.7.1/firebase-messaging.js');
-      
-      firebase.initializeApp({
-        apiKey: "AIzaSyAjE-2q6PONBkCin9ZN22gDp9Q8pAH9ZW8",
-        authDomain: "story-97cf7.firebaseapp.com",
-        projectId: "story-97cf7",
-        messagingSenderId: "742801388214",
-        appId: "1:742801388214:web:32a305a8057b0582c5ec17"
-      });
+  <div class="container">
+    <h2>شارك واربح 50 جنيه!</h2>
 
-      const messaging = firebase.messaging();
+    <button id="share-btn">شارك الآن</button>
 
-      messaging.onBackgroundMessage(function(payload) {
-        const notificationTitle = payload.notification.title;
-        const notificationOptions = {
-          body: payload.notification.body
-        };
-        self.registration.showNotification(notificationTitle, notificationOptions);
-      });
-    `;
+    <div id="progress-container">
+      <div id="progress-label">شارك الرابط مع 100 شخص على واتساب أو فيسبوك</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
 
-    // إنشاء ملف SW وتسجيله
-    const blob = new Blob([swCode], { type: "application/javascript" });
-    const swUrl = URL.createObjectURL(blob);
+    <div id="whatsapp-share">
+      <a href="https://wa.me/?text=ربح المال 🤑 سجل واربح من هنا: https://saif1230876657.github.io/my-store/" target="_blank">
+        مشاركة على واتساب
+      </a>
+    </div>
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-messaging.js";
+    <div id="money-box">
+      <strong>رصيدك: 50 جنيه</strong><br>
+      <small>لا يمكنك السحب قبل الوصول إلى 1000 جنيه</small>
+    </div>
+  </div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAjE-2q6PONBkCin9ZN22gDp9Q8pAH9ZW8",
-      authDomain: "story-97cf7.firebaseapp.com",
-      projectId: "story-97cf7",
-      messagingSenderId: "742801388214",
-      appId: "1:742801388214:web:32a305a8057b0582c5ec17"
-    };
+  <script>
+    let progress = parseInt(localStorage.getItem('progress')) || 0;
+    const progressFill = document.getElementById('progress-fill');
+    const progressContainer = document.getElementById('progress-container');
+    const moneyBox = document.getElementById('money-box');
+    const whatsappShare = document.getElementById('whatsapp-share');
 
-    const app = initializeApp(firebaseConfig);
-    const messaging = getMessaging(app);
-
-    // تسجيل SW
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register(swUrl)
-        .then((registration) => {
-          console.log("Service Worker مسجل:", registration.scope);
-
-          Notification.requestPermission().then((permission) => {
-            if (permission === "granted") {
-              getToken(messaging, {
-                vapidKey: "BCxH3Re5ECq5gkZTasZpF8NE9yccrbCX95jGZKkTPV3jmySks6LrD09wSVTPjRVjS1zT3OGIM5OvA4NTJJd92Mw",
-                serviceWorkerRegistration: registration
-              }).then((currentToken) => {
-                if (currentToken) {
-                  console.log("Token:", currentToken);
-                  alert("تم تفعيل الإشعارات. التوكن في الكونسول.");
-                } else {
-                  console.log("لا يوجد توكن");
-                }
-              });
-            } else {
-              alert("تم رفض الإذن للإشعارات.");
-            }
-          });
-
-          onMessage(messaging, (payload) => {
-            console.log("إشعار وارد:", payload);
-            alert("إشعار: " + payload.notification.title + "\n" + payload.notification.body);
-          });
-
-        }).catch((err) => {
-          console.error("فشل تسجيل SW:", err);
-        });
+    function updateProgressUI() {
+      progressFill.style.width = progress + "%";
+      if (progress > 0) {
+        progressContainer.style.display = "block";
+        whatsappShare.style.display = "block";
+      }
+      if (progress >= 100) {
+        moneyBox.style.display = "block";
+      }
     }
+
+    document.getElementById('share-btn').addEventListener('click', () => {
+      if (progress < 100) {
+        progress += 10;
+        localStorage.setItem('progress', progress);
+        updateProgressUI();
+
+        // فتح إعلان خارجي
+        window.open('https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e', '_blank');
+      }
+    });
+
+    updateProgressUI();
   </script>
+
 </body>
 </html>
