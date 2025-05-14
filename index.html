@@ -1,148 +1,310 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>ربح المال 🤑</title>
-
-  <!-- Open Graph for معاينة المشاركة -->
-  <meta property="og:title" content="ربح المال 🤑">
-  <meta property="og:description" content="شارك الرابط واربح 50 جنيه لكل 100 مشاركة!">
-  <meta property="og:image" content="https://i.postimg.cc/d0bCXh3m/Screenshot-680d03679600f7af0b4c700c6b270fe7-2.jpg">
-  <meta property="og:url" content="https://saif1230876657.github.io/my-store/">
-  <meta property="og:type" content="website">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>شارك واربح جوائز قيمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #2ecc71;
+      --secondary-color: #3498db;
+      --accent-color: #f1c40f;
+      --light-gray: #ecf0f1;
+      --dark-gray: #34495e;
+      --white: #ffffff;
+      --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+    }
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f9f9f9;
+      font-family: 'Cairo', sans-serif;
       text-align: center;
-      padding: 30px;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      color: var(--dark-gray);
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    h1 {
+      color: var(--white);
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     .container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 400px;
+      background: var(--white);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 500px;
       margin: auto;
     }
-    #share-btn {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    #progress-container {
-      margin-top: 30px;
-      display: none;
-    }
-    #progress-label {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .progress-bar {
-      background-color: #e0e0e0;
-      border-radius: 20px;
-      overflow: hidden;
-      height: 25px;
-      width: 100%;
-    }
-    .progress-fill {
-      background-color: #28a745;
-      height: 100%;
-      width: 0%;
-      transition: width 0.4s;
-    }
-    #money-box {
-      margin-top: 30px;
-      display: none;
-      background-color: #fffae6;
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px dashed #ffc107;
-      font-size: 20px;
-      color: #333;
-    }
-    #whatsapp-share {
-      margin-top: 20px;
-      display: none;
-    }
-    #whatsapp-share a {
-      display: inline-block;
-      background-color: #25D366;
-      color: white;
+    button {
       padding: 12px 25px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 16px;
+      font-size: 1em;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: background 0.3s;
+      background: var(--primary-color);
+      color: var(--white);
+    }
+    button:hover:not(:disabled) {
+      background: #27ae60;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .info-box {
+      margin: 20px auto;
+      padding: 15px;
+      background: #fff8e1;
+      border: 2px solid var(--accent-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+      display: inline-block;
+    }
+    #progressContainer {
+      background: var(--light-gray);
+      border-radius: 20px;
+      height: 30px;
+      overflow: hidden;
+      margin: 15px 0;
+      display: none;
+    }
+    #progressBar {
+      height: 100%;
+      width: 0;
+      background: var(--accent-color);
+      line-height: 30px;
+      color: var(--white);
+      font-weight: bold;
+      transition: width 0.4s;
+      text-align: center;
+    }
+    .motivation-text {
+      color: #555;
+      margin-top: 10px;
+    }
+    /* مودال السحب */
+    #withdrawModal {
+      display: none;
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #withdrawContent {
+      position: relative;
+      background: var(--white);
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 90%;
+      max-width: 320px;
+      text-align: center;
+    }
+    #withdrawContent .closeBtn {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 1.2em;
+      cursor: pointer;
+      color: #aaa;
+    }
+    #withdrawContent .closeBtn:hover {
+      color: #444;
+    }
+    #withdrawContent input {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 1em;
+    }
+    #withdrawContent .note {
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 10px;
+    }
+    #withdrawContent .msg {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    /* بانر الإعلان */
+    #bannerAdContainer {
+      margin: 30px auto;
+      width: 100%;
+      max-width: 728px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+      border-radius: var(--border-radius);
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
     }
   </style>
 </head>
-<body>
+<body dir="rtl">
+  <h1>🎉 شارك واربح جوائز قيمة 🎉</h1>
+
+  <div id="socialAdContainer"></div>
+  <div id="totalEarningsBox" class="info-box">إجمالي الأرباح: 0 جنيه</div>
 
   <div class="container">
-    <h2>شارك واربح 50 جنيه!</h2>
-
-    <button id="share-btn">شارك الآن</button>
-
-    <div id="progress-container">
-      <div id="progress-label">شارك الرابط مع 100 شخص على واتساب أو فيسبوك</div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
+    <div id="initialButton">
+      <button id="startBtn">🚀 ابدأ المشاركة الآن</button>
+      <p class="motivation-text">شارك مع أصدقائك واحصل على مكافآت رائعة!</p>
+    </div>
+    <div id="shareSection">
+      <div id="earningsBox" class="info-box"></div>
+      <div id="progressContainer">
+        <div id="progressBar">0%</div>
       </div>
+      <button id="shareBtn">شارك في واتساب (0%)</button>
+      <p class="motivation-text">كل مشاركة تقربك من جائزتك الكبرى!</p>
     </div>
+  </div>
 
-    <div id="whatsapp-share">
-      <a href="https://wa.me/?text=ربح المال 🤑 سجل واربح من هنا: https://saif1230876657.github.io/my-store/" target="_blank">
-        مشاركة على واتساب
-      </a>
-    </div>
+  <!-- بانر الإعلان تحت المحتوى (ثلاث إعلانات) -->
+  <div id="bannerAdContainer">
+    <script async data-cfasync="false" src="//pl26642122.profitableratecpm.com/207bfbb4822f7b530ad2c391a896859c/invoke.js"></script>
+    <div id="container-207bfbb4822f7b530ad2c391a896859c-1"></div>
 
-    <div id="money-box">
-      <strong>رصيدك: 50 جنيه</strong><br>
-      <small>لا يمكنك السحب قبل الوصول إلى 1000 جنيه</small>
+    <script async data-cfasync="false" src="//pl26642122.profitableratecpm.com/207bfbb4822f7b530ad2c391a896859c/invoke.js"></script>
+    <div id="container-207bfbb4822f7b530ad2c391a896859c-2"></div>
+
+    <script async data-cfasync="false" src="//pl26642122.profitableratecpm.com/207bfbb4822f7b530ad2c391a896859c/invoke.js"></script>
+    <div id="container-207bfbb4822f7b530ad2c391a896859c-3"></div>
+  </div>
+
+  <!-- مودال السحب -->
+  <div id="withdrawModal">
+    <div id="withdrawContent">
+      <span class="closeBtn" id="closeWithdraw">&times;</span>
+      <h3>سحب الأرباح</h3>
+      <p class="note">لا يمكنك السحب إلا بعد الوصول إلى 1000 جنيه</p>
+      <input type="tel" id="phoneInput" placeholder="رقم فودافون كاش">
+      <button id="withdrawBtn" disabled>سحب</button>
+      <p class="msg" id="withdrawMsg"></p>
     </div>
   </div>
 
   <script>
-    let progress = parseInt(localStorage.getItem('progress')) || 0;
-    const progressFill = document.getElementById('progress-fill');
-    const progressContainer = document.getElementById('progress-container');
-    const moneyBox = document.getElementById('money-box');
-    const whatsappShare = document.getElementById('whatsapp-share');
+    document.addEventListener('DOMContentLoaded', () => {
+      const landingUrl     = 'https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e';
+      const adScriptUrl    = 'https://pl26561726.profitableratecpm.com/b8/89/68/b88968c03fb5ba3cf5967ce48c255ce4.js';
 
-    function updateProgressUI() {
-      progressFill.style.width = progress + "%";
-      if (progress > 0) {
-        progressContainer.style.display = "block";
-        whatsappShare.style.display = "block";
-      }
-      if (progress >= 100) {
-        moneyBox.style.display = "block";
-      }
-    }
+      const socialAdContainer = document.getElementById('socialAdContainer');
+      const startBtn          = document.getElementById('startBtn');
+      const initialButton     = document.getElementById('initialButton');
+      const shareSection      = document.getElementById('shareSection');
+      const shareBtn          = document.getElementById('shareBtn');
+      const progressBar       = document.getElementById('progressBar');
+      const progressContainer = document.getElementById('progressContainer');
+      const earningsBox       = document.getElementById('earningsBox');
+      const totalEarningsBox  = document.getElementById('totalEarningsBox');
 
-    document.getElementById('share-btn').addEventListener('click', () => {
-      if (progress < 100) {
-        progress += 10;
+      let progress      = parseInt(localStorage.getItem('progress')) || 0;
+      const increment   = 10;
+      const rewardAmount= 50;
+      let totalEarnings = parseInt(localStorage.getItem('totalEarnings')) || 0;
+
+      function loadSocialAd() {
+        socialAdContainer.innerHTML = '';
+        const s = document.createElement('script');
+        s.src   = adScriptUrl;
+        s.async = true;
+        socialAdContainer.appendChild(s);
+      }
+      function updateTotal() {
+        totalEarningsBox.textContent = `إجمالي الأرباح: ${totalEarnings} جنيه`;
+        localStorage.setItem('totalEarnings', totalEarnings);
+      }
+      function updateProg() {
+        progressBar.style.width = progress + '%';
+        progressBar.textContent = progress + '%';
+        shareBtn.textContent    = `شارك في واتساب (${progress}%)`;
         localStorage.setItem('progress', progress);
-        updateProgressUI();
-
-        // فتح إعلان خارجي في نافذة جديدة
-        window.open('https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e', '_blank');
       }
+
+      loadSocialAd();
+      setInterval(loadSocialAd, 10000);
+      updateTotal(); updateProg();
+
+      if (progress > 0 && progress < 100) {
+        initialButton.style.display   = 'none';
+        shareSection.style.display    = 'block';
+        progressContainer.style.display = 'block';
+      }
+
+      startBtn.onclick = () => {
+        window.open(landingUrl, '_blank');
+        setTimeout(() => {
+          initialButton.style.display   = 'none';
+          shareSection.style.display    = 'block';
+          progressContainer.style.display = 'block';
+        }, 300);
+      };
+
+      shareBtn.onclick = () => {
+        window.open(
+          `https://wa.me/?text=${encodeURIComponent(`شارك هذا العرض واربح ${rewardAmount} جنيه! ${window.location.href}`)}`,
+          '_blank'
+        );
+        setTimeout(() => {
+          progress = Math.min(progress + increment, 100);
+          if (progress >= 100) {
+            earningsBox.textContent = `🎉 ربحت ${rewardAmount} جنيه!`;
+            earningsBox.style.display = 'block';
+            totalEarnings += rewardAmount;
+            progress = 0;
+            updateTotal(); updateProg();
+            setTimeout(() => {
+              shareSection.style.display    = 'none';
+              initialButton.style.display   = 'block';
+            }, 3000);
+          } else {
+            updateProg();
+            shareSection.style.display    = 'none';
+            initialButton.style.display   = 'block';
+          }
+        }, 1000);
+      };
+
+      // فتح مودال السحب عند الضغط على إجمالي الأرباح
+      const modal       = document.getElementById('withdrawModal');
+      const closeBtn    = document.getElementById('closeWithdraw');
+      const phoneIn     = document.getElementById('phoneInput');
+      const wBtn        = document.getElementById('withdrawBtn');
+      const wMsg        = document.getElementById('withdrawMsg');
+
+      totalEarningsBox.onclick = () => {
+        wMsg.textContent = '';
+        phoneIn.value    = '';
+        wBtn.disabled    = totalEarnings < 1000;
+        modal.style.display = 'flex';
+      };
+      closeBtn.onclick = () => modal.style.display = 'none';
+
+      phoneIn.oninput = () => {
+        const validNum = /^01[0-2,5]\d{8}$/.test(phoneIn.value);
+        wBtn.disabled = !(totalEarnings >= 1000 && validNum);
+      };
+      wBtn.onclick = () => {
+        wMsg.style.color   = 'green';
+        wMsg.textContent   = 'ممتاز! ستتواصل معك خلال 48 ساعة. اكمل في الكسب حتى ذلك الحين.';
+        setTimeout(() => modal.style.display = 'none', 3000);
+      };
     });
-
-    updateProgressUI();
   </script>
-
-  <!-- إعلان دائم التشغيل -->
-  <script type='text/javascript' src='//pl26515980.profitableratecpm.com/35/45/59/3545593549db2a016d0f7f3c6df97fbc.js'></script>
-
 </body>
 </html>
