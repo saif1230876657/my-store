@@ -1,356 +1,206 @@
-<!DOCTYPE html>  <html lang="ar">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title>شارك واربح جوائز قيمة</title>  
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">  
-  <style>  
-    :root {  
-      --primary-color: #2ecc71; /* أخضر جذاب */  
-      --secondary-color: #3498db; /* أزرق مكمل */  
-      --accent-color: #f1c40f; /* أصفر للمكافآت والتنبيهات */  
-      --light-gray: #ecf0f1;  
-      --dark-gray: #34495e;  
-      --white: #ffffff;  
-      --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);  
-      --border-radius: 12px;  
-      --font-family: 'Cairo', sans-serif;  
-    }  body {  
-  font-family: var(--font-family);  
-  text-align: center;  
-  padding: 20px; /* تقليل الحشو ليناسب الشاشات الصغيرة بشكل أفضل */  
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);  
-  color: var(--dark-gray);  
-  margin: 0;  
-  display: flex;  
-  flex-direction: column;  
-  align-items: center;  
-  min-height: 100vh;  
-  box-sizing: border-box;  
-  overflow-x: hidden; /* منع التمرير الأفقي */  
-}  
+<!DOCTYPE html><html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>شارك واربح جوائز قيمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2ecc71;
+      --secondary-color: #3498db;
+      --accent-color: #f1c40f;
+      --light-gray: #ecf0f1;
+      --dark-gray: #34495e;
+      --white: #ffffff;
+      --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+      --font-family: 'Cairo', sans-serif;
+    }
+    body {
+      font-family: var(--font-family);
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+      color: var(--dark-gray);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    .container {
+      background: var(--white);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 90%;
+      max-width: 500px;
+      margin-top: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .container:hover { transform: translateY(-5px); }
+    h1 { color: var(--primary-color); margin-bottom: 20px; font-size: 2.5em; font-weight: 700; }
+    button { padding: 18px 35px; font-size: 1.1em; font-weight: 600; cursor: pointer; border: none; border-radius: var(--border-radius); background: var(--primary-color); color: var(--white); transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; margin: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+    button:hover { background: #27ae60; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5); }
+    button:active { transform: translateY(-1px); }
+    #progressContainer { width: 100%; height: 35px; background: var(--light-gray); border-radius: 20px; margin: 25px auto; overflow: hidden; display: none; border: 2px solid var(--primary-color); box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
+    #progressBar { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-color) 0%, var(--primary-color) 100%); transition: width 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-radius: 20px 0 0 20px; display: flex; align-items: center; justify-content: center; font-size: 0.9em; color: var(--white); font-weight: 600; }
+    .info-box { margin: 20px auto; padding: 20px; border-radius: var(--border-radius); width: 80%; max-width: 300px; font-size: 1.2em; font-weight: 600; box-shadow: var(--box-shadow); transition: all 0.3s ease; }
+    #earningsBox { border: 2px solid var(--primary-color); color: var(--primary-color); background: #e8f5e9; display: none; }
+    #totalEarningsBox { border: 2px solid var(--accent-color); color: #c77c00; background: #fff8e1; font-size: 1.1em; margin-bottom: 30px; }
+    .motivation-text { font-size: 1em; color: var(--dark-gray); margin-top: 15px; opacity: 0.8; }
+    /* Modal Styles */
+    #withdrawModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+      align-items: center; justify-content: center;
+    }
+    .modal-content {
+      background: var(--white);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 90%; max-width: 400px;
+      text-align: right;
+      direction: rtl;
+    }
+    .modal-content label { display: block; margin-bottom: 10px; font-weight: 600; }
+    .modal-content input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--light-gray); border-radius: var(--border-radius); font-size: 1em; }
+    .modal-content .close-btn { background: #e74c3c; }
+  </style>
+</head>
+<body dir="rtl">
+  <h1>🎉 شارك واربح جوائز قيمة 🎉</h1>  <!-- زر سحب الأرباح --><button id="withdrawBtn">سحب الأرباح</button>
 
-.container {  
-  background: var(--white);  
-  padding: 30px;  
-  border-radius: var(--border-radius);  
-  box-shadow: var(--box-shadow);  
-  width: 90%;  
-  max-width: 500px; /* تحديد عرض أقصى للمحتوى */  
-  margin-top: 20px;  
-  transition: transform 0.3s ease-in-out;  
-}  
+  <div id="socialAdContainer"></div>
+  <div id="totalEarningsBox" class="info-box">إجمالي الأرباح: 0 جنيه</div>  <div class="container">
+    <div id="initialButton">
+      <button id="startBtn">🚀 ابدأ المشاركة الآن</button>
+      <p class="motivation-text">شارك مع أصدقائك واحصل على مكافآت رائعة!</p>
+    </div>
+    <div id="shareSection">
+      <div id="earningsBox" class="info-box"></div>
+      <div id="progressContainer">
+        <div id="progressBar">0%</div>
+      </div>
+      <button id="shareBtn">شارك في واتساب (0%)</button>
+      <p class="motivation-text">كل مشاركة تقربك من جائزتك الكبرى!</p>
+    </div>
+  </div>  <!-- Withdraw Modal -->  <div id="withdrawModal">
+    <div class="modal-content">
+      <h2>سحب الأرباح</h2>
+      <label for="vodafoneNumber">رقم فودافون كاش:</label>
+      <input type="tel" id="vodafoneNumber" placeholder="010XXXXXXXX">
+      <button id="confirmWithdrawBtn">سحب</button>
+      <button class="close-btn" id="closeModalBtn">إلغاء</button>
+    </div>
+  </div>  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const landingUrl = 'https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e';
+      const adScriptUrl = 'https://pl26561726.profitableratecpm.com/b8/89/68/b88968c03fb5ba3cf5967ce48c255ce4.js';
 
-.container:hover {  
-  transform: translateY(-5px);  
-}  
+      const socialAdContainer = document.getElementById('socialAdContainer');
+      const startBtn = document.getElementById('startBtn');
+      const initialButton = document.getElementById('initialButton');
+      const shareSection = document.getElementById('shareSection');
+      const shareBtn = document.getElementById('shareBtn');
+      const progressBar = document.getElementById('progressBar');
+      const progressContainer = document.getElementById('progressContainer');
+      const earningsBox = document.getElementById('earningsBox');
+      const totalEarningsBox = document.getElementById('totalEarningsBox');
+      const withdrawBtn = document.getElementById('withdrawBtn');
+      const withdrawModal = document.getElementById('withdrawModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const confirmWithdrawBtn = document.getElementById('confirmWithdrawBtn');
+      const vodafoneInput = document.getElementById('vodafoneNumber');
 
-h1 {  
-  color: var(--primary-color);  
-  margin-bottom: 20px;  
-  font-size: 2.5em;  
-  font-weight: 700;  
-}  
+      let progress = parseInt(localStorage.getItem('progress')) || 0;
+      const increment = 10;
+      const rewardAmount = 50;
+      let totalEarnings = parseInt(localStorage.getItem('totalEarnings')) || 0;
 
-button {  
-  padding: 18px 35px;  
-  font-size: 1.1em;  
-  font-weight: 600;  
-  cursor: pointer;  
-  border: none;  
-  border-radius: var(--border-radius);  
-  background: var(--primary-color);  
-  color: var(--white);  
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;  
-  margin-top: 15px;  
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
-}  
+      function loadSocialAd() {
+        socialAdContainer.innerHTML = '';
+        const script = document.createElement('script');
+        script.src = adScriptUrl;
+        script.async = true;
+        socialAdContainer.appendChild(script);
+      }
 
-button:hover {  
-  background: #27ae60; /* أخضر أغمق عند المرور */  
-  transform: translateY(-3px);  
-  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);  
-}  
+      function updateTotalEarnings() {
+        totalEarningsBox.textContent = `إجمالي الأرباح: ${totalEarnings} جنيه`;
+        localStorage.setItem('totalEarnings', totalEarnings);
+        totalEarningsBox.classList.remove('fade-in');
+        void totalEarningsBox.offsetWidth;
+        totalEarningsBox.classList.add('fade-in');
+      }
 
-button:active {  
-  transform: translateY(-1px);  
-}  
+      function updateProgress() {
+        progressBar.style.width = progress + '%';
+        progressBar.textContent = progress + '%';
+        shareBtn.textContent = `شارك في واتساب (${progress}%)`;
+        localStorage.setItem('progress', progress);
+      }
 
-#progressContainer {  
-  width: 100%; /* استخدام العرض الكامل داخل الحاوية */  
-  height: 35px;  
-  background: var(--light-gray);  
-  border-radius: 20px; /* جعلها أكثر دائرية */  
-  margin: 25px auto;  
-  overflow: hidden;  
-  display: none;  
-  border: 2px solid var(--primary-color);  
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);  
-}  
+      function showModal() { withdrawModal.style.display = 'flex'; }
+      function hideModal() { withdrawModal.style.display = 'none'; vodafoneInput.value = ''; }
 
-#progressBar {  
-  height: 100%;  
-  width: 0;  
-  background: linear-gradient(90deg, var(--accent-color) 0%, var(--primary-color) 100%);  
-  transition: width 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* تأثير انتقال مرن */  
-  border-radius: 20px 0 0 20px; /* ليتناسب مع الحاوية */  
-  display: flex;  
-  align-items: center;  
-  justify-content: center;  
-  font-size: 0.9em;  
-  color: var(--white);  
-  font-weight: 600;  
-}  
+      // Handle withdraw button click
+      withdrawBtn.addEventListener('click', () => {
+        if (totalEarnings < 1000) {
+          alert('لا يمكنك السحب إلا بعد تجميع 1000 جنيه. رصيدك الحالي: ' + totalEarnings + ' جنيه.');
+        } else {
+          showModal();
+        }
+      });
 
-#shareSection, #earningsBox, #totalEarningsBox {  
-  display: none;  
-}  
+      closeModalBtn.addEventListener('click', hideModal);
 
-.info-box { /* تنسيق موحد لصناديق المعلومات */  
-  margin: 20px auto;  
-  padding: 20px;  
-  border-radius: var(--border-radius);  
-  width: 80%;  
-  max-width: 300px;  
-  font-size: 1.2em;  
-  font-weight: 600;  
-  box-shadow: var(--box-shadow);  
-  transition: all 0.3s ease;  
-}  
+      confirmWithdrawBtn.addEventListener('click', () => {
+        const number = vodafoneInput.value.trim();
+        if (!number.match(/^01[0-9]{9}$/)) {
+          alert('يرجى إدخال رقم فودافون كاش صحيح.');
+          return;
+        }
+        alert(`تم إرسال طلب السحب إلى ${number}. سيتم التواصل معك قريباً.`);
+        totalEarnings -= 1000; // خصم المبلغ المسحوب
+        updateTotalEarnings();
+        hideModal();
+      });
 
-#earningsBox {  
-  border: 2px solid var(--primary-color);  
-  color: var(--primary-color);  
-  background: #e8f5e9; /* أخضر فاتح */  
-}  
+      loadSocialAd();
+      setInterval(loadSocialAd, 10000);
+      showModal(); // remove this if you don't want auto show
 
-#totalEarningsBox {  
-  border: 2px solid var(--accent-color);  
-  color: #c77c00; /* برتقالي أغمق */  
-  background: #fff8e1; /* أصفر فاتح جداً */  
-  font-size: 1.1em; /* تعديل حجم الخط ليكون مناسبًا */  
-  margin-bottom: 30px; /* زيادة الهامش السفلي */  
-}  
+      // Initialize
+      updateTotalEarnings();
+      updateProgress();
+      if (progress > 0 && progress < 100) showShareSectionView(); else showElement(initialButton);
 
-#socialAdContainer {  
-  margin: 20px auto;  
-  height: auto; /* السماح بتغيير الارتفاع بناءً على الإعلان */  
-  min-height: 90px; /* تحديد ارتفاع أدنى */  
-  width: 100%;  
-  max-width: 728px; /* عرض شائع للإعلانات */  
-  display: flex;  
-  justify-content: center;  
-  align-items: center;  
-  /* يمكنك إضافة خلفية أو حدود إذا كان الإعلان لا يملأ المساحة */  
-  /* background: #f0f0f0; */  
-  /* border: 1px dashed #ccc; */  
-}  
+      startBtn.addEventListener('click', () => {
+        window.open(landingUrl, '_blank');
+        setTimeout(showShareSectionView, 300);
+      });
 
-/* مؤثرات للظهور والاختفاء */  
-.fade-in {  
-  animation: fadeInAnimation 0.5s ease-in forwards;  
-}  
+      shareBtn.addEventListener('click', () => {
+        window.open(`https://wa.me/?text=${encodeURIComponent(`شارك هذا العرض الرائع واربح ${rewardAmount} جنيه! لا تفوت الفرصة: ${window.location.href}`)}`, '_blank');
+        setTimeout(() => { progress = Math.min(progress + increment, 100); updateProgress();
+          if (progress >= 100) {
+            earningsBox.textContent = `🎉 لقد ربحت ${rewardAmount} جنيه! 🎉`;
+            showElement(earningsBox);
+            totalEarnings += rewardAmount;
+            progress = 0;
+            updateTotalEarnings(); updateProgress(); setTimeout(() => { hideElement(shareSection); showElement(initialButton); }, 3000);
+          } else { hideElement(shareSection); showElement(initialButton); }
+        }, 1000);
+      });
 
-.fade-out {  
-  animation: fadeOutAnimation 0.5s ease-out forwards;  
-}  
-
-@keyframes fadeInAnimation {  
-  from { opacity: 0; transform: translateY(10px); }  
-  to { opacity: 1; transform: translateY(0); }  
-}  
-
-@keyframes fadeOutAnimation {  
-  from { opacity: 1; transform: translateY(0); }  
-  to { opacity: 0; transform: translateY(10px); }  
-}  
-
-/* أيقونة بجانب زر المشاركة */  
-#shareBtn::before {  
-  content: '🔗'; /* يمكنك استخدام أيقونة SVG أو FontAwesome هنا */  
-  margin-right: 8px;  
-}  
-
-/* رسالة تشجيعية */  
-.motivation-text {  
-  font-size: 1em;  
-  color: var(--dark-gray);  
-  margin-top: 15px;  
-  opacity: 0.8;  
-}  
-
-/* تصميم متجاوب */  
-@media (max-width: 600px) {  
-  h1 {  
-    font-size: 2em;  
-  }  
-  .container {  
-    padding: 20px;  
-    width: 95%;  
-  }  
-  button {  
-    padding: 15px 25px;  
-    font-size: 1em;  
-  }  
-  .info-box {  
-    width: 90%;  
-    font-size: 1.1em;  
-  }  
-   #socialAdContainer {  
-     min-height: 50px; /* تعديل ارتفاع الإعلان للشاشات الصغيرة */  
-   }  
-}
-
-  </style>  
-</head>  
-<body dir="rtl">    <h1>🎉 شارك واربح جوائز قيمة 🎉</h1>    <div id="socialAdContainer">  
-    </div>    <div id="totalEarningsBox" class="info-box">إجمالي الأرباح: 0 جنيه</div>    <div class="container">  
-    <div id="initialButton">  
-      <button id="startBtn">🚀 ابدأ المشاركة الآن</button>  
-      <p class="motivation-text">شارك مع أصدقائك واحصل على مكافآت رائعة!</p>  
-    </div>  <div id="shareSection">  
-  <div id="earningsBox" class="info-box"></div>  
-  <div id="progressContainer">  
-    <div id="progressBar">0%</div>  
-  </div>  
-  <button id="shareBtn">شارك في واتساب (0%)</button>  
-  <p class="motivation-text">كل مشاركة تقربك من جائزتك الكبرى!</p>  
-</div>
-
-  </div>    <div style="margin-top: 30px; width:100%; max-width:728px; display:flex; justify-content:center;">  
-    <script async="async" data-cfasync="false" src="//pl26642122.profitableratecpm.com/207bfbb4822f7b530ad2c391a896859c/invoke.js"></script>  
-    <div id="container-207bfbb4822f7b530ad2c391a896859c"></div>  
-  </div>    <script>  
-    document.addEventListener('DOMContentLoaded', () => {  
-      const landingUrl = 'https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e';  
-      const adScriptUrl = 'https://pl26561726.profitableratecpm.com/b8/89/68/b88968c03fb5ba3cf5967ce48c255ce4.js';  
-  
-      const socialAdContainer = document.getElementById('socialAdContainer');  
-      const startBtn = document.getElementById('startBtn');  
-      const initialButton = document.getElementById('initialButton');  
-      const shareSection = document.getElementById('shareSection');  
-      const shareBtn = document.getElementById('shareBtn');  
-      const progressBar = document.getElementById('progressBar');  
-      const progressContainer = document.getElementById('progressContainer');  
-      const earningsBox = document.getElementById('earningsBox');  
-      const totalEarningsBox = document.getElementById('totalEarningsBox');  
-  
-      let progress = parseInt(localStorage.getItem('progress')) || 0;  
-      const increment = 10; // يمكنك تعديل هذه القيمة حسب عدد المشاركات المطلوبة  
-      const rewardAmount = 50;  
-      let totalEarnings = parseInt(localStorage.getItem('totalEarnings')) || 0;  
-  
-      // دالة لتحميل الإعلان في الشريط الاجتماعي  
-      function loadSocialAd() {  
-        // مسح المحتوى القديم قبل إضافة سكريبت جديد لتجنب التكرار  
-        socialAdContainer.innerHTML = '';  
-        const script = document.createElement('script');  
-        script.type = 'text/javascript'; // نوع السكريبت مهم  
-        script.src = adScriptUrl;  
-        script.async = true;  
-        // قد تحتاج إلى معالجة الأخطاء هنا إذا فشل تحميل السكريプト  
-        script.onerror = () => console.error("Failed to load ad script: " + adScriptUrl);  
-        socialAdContainer.appendChild(script);  
-      }  
-  
-      function updateTotalEarnings() {  
-        totalEarningsBox.textContent = `إجمالي الأرباح: ${totalEarnings} جنيه`;  
-        localStorage.setItem('totalEarnings', totalEarnings);  
-        // إضافة تأثير بسيط عند تحديث الأرباح  
-        totalEarningsBox.classList.remove('fade-in');  
-        void totalEarningsBox.offsetWidth; // Trigger reflow  
-        totalEarningsBox.classList.add('fade-in');  
-      }  
-  
-      function updateProgress() {  
-        progressBar.style.width = progress + '%';  
-        progressBar.textContent = progress + '%'; // عرض النسبة داخل الشريط  
-        shareBtn.textContent = `شارك في واتساب (${progress}%)`;  
-        localStorage.setItem('progress', progress);  
-      }  
-  
-      function showElement(element) {  
-        element.style.display = 'block'; // أو 'flex' حسب نوع العنصر  
-        element.classList.remove('fade-out');  
-        element.classList.add('fade-in');  
-      }  
-  
-      function hideElement(element) {  
-        element.classList.remove('fade-in');  
-        element.classList.add('fade-out');  
-        setTimeout(() => {  
-          element.style.display = 'none';  
-        }, 500); // تطابق مدة الأنيميشن  
-      }  
-  
-      function showShareSectionView() {  
-        hideElement(initialButton);  
-        showElement(shareSection);  
-        showElement(progressContainer);  
-        // إخفاء صندوق الأرباح المؤقتة في البداية  
-        earningsBox.style.display = 'none';  
-        updateProgress();  
-      }  
-  
-      function getWhatsAppLink() {  
-        const message = encodeURIComponent(`شارك هذا العرض الرائع واربح ${rewardAmount} جنيه! لا تفوت الفرصة: ${window.location.href}`);  
-        return `https://wa.me/?text=${message}`;  
-      }  
-  
-      // تحميل إعلان الشريط الاجتماعي عند تحميل الصفحة وتحديثه بشكل دوري  
-      loadSocialAd();  
-      setInterval(loadSocialAd, 10000); // تحديث الإعلان كل 10 ثواني (يمكنك تعديل الفترة)  
-  
-      // إعداد العدادات عند تحميل الصفحة  
-      showElement(totalEarningsBox); // إظهار صندوق إجمالي الأرباح  
-      updateTotalEarnings();  
-      updateProgress(); // تحديث شريط التقدم بناءً على القيمة المحفوظة  
-  
-      // معالجة حالة إذا كان التقدم المحفوظ يظهر قسم المشاركة مباشرة  
-      if (progress > 0 && progress < 100) {  
-        showShareSectionView();  
-      } else {  
-        showElement(initialButton); // إظهار زر البداية إذا لم يكن هناك تقدم  
-      }  
-  
-  
-      startBtn.addEventListener('click', () => {  
-        // فتح الرابط في نافذة جديدة  
-        window.open(landingUrl, '_blank');  
-        // الانتقال إلى واجهة المشاركة بعد فترة قصيرة لإعطاء المستخدم فرصة لرؤية الصفحة الجديدة  
-        setTimeout(showShareSectionView, 300);  
-      });  
-  
-      shareBtn.addEventListener('click', () => {  
-        // فتح رابط واتساب  
-        window.open(getWhatsAppLink(), '_blank');  
-  
-        // تحديث التقدم بعد فترة للتأكد من أن المستخدم قد شارك بالفعل  
-        // هذا تقديري، لا يمكن التحقق الفعلي من المشاركة من جانب العميل فقط  
-        setTimeout(() => {  
-          progress = Math.min(progress + increment, 100);  
-          updateProgress();  
-  
-          if (progress >= 100) {  
-            earningsBox.textContent = `🎉 لقد ربحت ${rewardAmount} جنيه! 🎉`;  
-            showElement(earningsBox);  
-            totalEarnings += rewardAmount;  
-            progress = 0; // إعادة تعيين التقدم لجولة جديدة  
-            updateTotalEarnings();  
-            updateProgress(); // تحديث شريط التقدم ليعود إلى الصفر  
-            // تأخير إخفاء قسم المشاركة وإظهار زر البداية مجددًا  
-            setTimeout(() => {  
-                hideElement(shareSection);  
-                showElement(initialButton);  
-            }, 3000); // إعطاء وقت للمستخدم لرؤية رسالة الربح  
-          } else {  
-            // إذا لم يكتمل التقدم، نعود لواجهة زر البداية بعد المشاركة مباشرة  
-            // هذا يعطي شعورًا بأن كل "مشاركة" هي خطوة منفصلة  
-            hideElement(shareSection);  
-            showElement(initialButton);  
-          }  
-        }, 1000); // تأخير بسيط  
-      });  
-    });  
-  </script>  </body>  
-</html>  
+      function showElement(el) { el.style.display = 'block'; el.classList.remove('fade-out'); el.classList.add('fade-in'); }
+      function hideElement(el) { el.classList.remove('fade-in'); el.classList.add('fade-out'); setTimeout(() => el.style.display = 'none', 500); }
+      function showShareSectionView() { hideElement(initialButton); showElement(shareSection); showElement(progressContainer); }
+    });
+  </script></body>
+</html>
