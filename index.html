@@ -1,206 +1,1017 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>شارك واربح جوائز قيمة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>باحثك الذكي - محركات بحث متعددة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
+    /* CSS Variables for Theme */
     :root {
-      --primary-color: #2ecc71;
-      --secondary-color: #3498db;
-      --accent-color: #f1c40f;
-      --light-gray: #ecf0f1;
-      --dark-gray: #34495e;
-      --white: #ffffff;
-      --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      --border-radius: 12px;
-      --font-family: 'Cairo', sans-serif;
+      /* Light Mode */
+      --bg-color: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+      --container-bg: #ffffff;
+      --text-color: #333;
+      --heading-color: #007bff;
+      --primary-color: #007bff;
+      --secondary-color: #0056b3;
+      --border-color: #ced4da;
+      --input-bg: #f8f9fa;
+      --input-border-focus: #007bff;
+      --box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      --button-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+      --button-hover-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+      --feature-bg: #e9ecef;
+      --feature-border: #007bff;
+      --news-border: 3px solid var(--primary-color);
+      --news-item-border: 1px dashed #ddd;
+      --panel-bg: #ffffff;
+      --panel-border: 1px solid #e0e0e0;
+      --panel-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      --history-item-border: 1px solid #eee;
+      --history-item-hover-bg: #f8f9fa;
+      --link-color: #333;
+      --link-hover-color: var(--primary-color);
+      --toast-bg: linear-gradient(45deg, #28a745, #218838);
+      --confirm-bg: #fff;
+      --confirm-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      --confirm-text-color: #555;
+      --cancel-button-bg: #6c757d;
+      --cancel-button-hover-bg: #5a6268;
+      --other-button-bg: #6c757d; /* For history panel buttons */
+      --other-button-hover-bg: #5a6268;
+    }
+
+    /* Dark Mode */
+    .dark-mode {
+      --bg-color: linear-gradient(135deg, #2c3e50, #34495e);
+      --container-bg: #3b5062;
+      --text-color: #ecf0f1;
+      --heading-color: #82ccdd;
+      --primary-color: #4db6ac; /* Teal/Cyan for accent */
+      --secondary-color: #00796b; /* Darker teal */
+      --border-color: #5a7d95;
+      --input-bg: #455a64;
+      --input-border-focus: #4db6ac;
+      --box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      --button-shadow: 0 6px 15px rgba(0, 121, 107, 0.4); /* Shadow with primary-color */
+      --button-hover-shadow: 0 8px 20px rgba(0, 121, 107, 0.5);
+      --feature-bg: #546e7a;
+      --feature-border: var(--primary-color);
+      --news-border: 3px solid var(--primary-color);
+      --news-item-border: 1px dashed #5a7d95;
+      --panel-bg: #455a64;
+      --panel-border: 1px solid #5a7d95;
+      --panel-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      --history-item-border: 1px solid #5a7d95;
+      --history-item-hover-bg: #546e7a;
+      --link-color: #bdc3c7; /* Light grey links */
+      --link-hover-color: var(--primary-color);
+      --toast-bg: linear-gradient(45deg, #2ecc71, #27ae60); /* Green remains ok */
+      --confirm-bg: #455a64;
+      --confirm-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      --confirm-text-color: #bdc3c7;
+      --cancel-button-bg: #7f8c8d; /* Grey for cancel */
+      --cancel-button-hover-bg: #95a5a6;
+      --other-button-bg: #7f8c8d; /* For history panel buttons */
+      --other-button-hover-bg: #95a5a6;
+    }
+
+    /* Generic RGB for shadows where needed (Fallback) */
+    :root { --primary-color-rgb: 0, 123, 255; } /* Default light mode RGB */
+    .dark-mode { --primary-color-rgb: 77, 182, 172; } /* Dark mode primary color RGB */
+
+
+    /* General Reset and Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     body {
-      font-family: var(--font-family);
-      text-align: center;
-      padding: 20px;
-      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-      color: var(--dark-gray);
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-color);
       min-height: 100vh;
-      box-sizing: border-box;
+      color: var(--text-color);
+      direction: rtl;
       overflow-x: hidden;
+      padding-bottom: 60px;
+      transition: background 0.5s ease, color 0.5s ease; /* Smooth mode transition */
     }
     .container {
-      background: var(--white);
-      padding: 30px;
-      border-radius: var(--border-radius);
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--container-bg);
+      border-radius: 15px;
+      padding: 40px 30px;
       box-shadow: var(--box-shadow);
-      width: 90%;
-      max-width: 500px;
-      margin-top: 20px;
-      transition: transform 0.3s ease-in-out;
+      position: relative;
+      transition: background 0.5s ease, box-shadow 0.5s ease; /* Smooth mode transition */
     }
-    .container:hover { transform: translateY(-5px); }
-    h1 { color: var(--primary-color); margin-bottom: 20px; font-size: 2.5em; font-weight: 700; }
-    button { padding: 18px 35px; font-size: 1.1em; font-weight: 600; cursor: pointer; border: none; border-radius: var(--border-radius); background: var(--primary-color); color: var(--white); transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; margin: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
-    button:hover { background: #27ae60; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5); }
-    button:active { transform: translateY(-1px); }
-    #progressContainer { width: 100%; height: 35px; background: var(--light-gray); border-radius: 20px; margin: 25px auto; overflow: hidden; display: none; border: 2px solid var(--primary-color); box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
-    #progressBar { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-color) 0%, var(--primary-color) 100%); transition: width 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-radius: 20px 0 0 20px; display: flex; align-items: center; justify-content: center; font-size: 0.9em; color: var(--white); font-weight: 600; }
-    .info-box { margin: 20px auto; padding: 20px; border-radius: var(--border-radius); width: 80%; max-width: 300px; font-size: 1.2em; font-weight: 600; box-shadow: var(--box-shadow); transition: all 0.3s ease; }
-    #earningsBox { border: 2px solid var(--primary-color); color: var(--primary-color); background: #e8f5e9; display: none; }
-    #totalEarningsBox { border: 2px solid var(--accent-color); color: #c77c00; background: #fff8e1; font-size: 1.1em; margin-bottom: 30px; }
-    .motivation-text { font-size: 1em; color: var(--dark-gray); margin-top: 15px; opacity: 0.8; }
-    /* Modal Styles */
-    #withdrawModal {
+    h1 {
+      text-align: center;
+      color: var(--heading-color);
+      margin-bottom: 30px;
+      font-size: 32px;
+      font-weight: 700; /* Bold heading */
+    }
+    h1 i {
+      margin-left: 10px;
+      color: var(--primary-color); /* Icon color matches primary */
+    }
+
+    .search-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .search-box,
+    .search-engine-select {
+      width: 100%;
+      max-width: 600px;
+      padding: 15px 25px;
+      font-size: 18px;
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+      margin-bottom: 15px;
+      background-color: var(--input-bg);
+      color: var(--text-color); /* Ensure text color is correct */
+    }
+    .search-box::placeholder { /* Style placeholder text */
+        color: var(--text-color);
+        opacity: 0.7;
+    }
+     .dark-mode .search-box::placeholder,
+     .dark-mode .search-engine-select::placeholder {
+        color: var(--text-color);
+        opacity: 0.5;
+     }
+    .search-box:focus,
+    .search-engine-select:focus {
+      border-color: var(--input-border-focus);
+      box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2); /* Use RGB var */
+      background-color: var(--container-bg); /* Use container bg on focus */
+    }
+     .search-engine-select {
+       padding-right: 40px;
+       -webkit-appearance: none;
+       -moz-appearance: none;
+       appearance: none;
+       /* Updated arrow color to match primary color */
+       background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234A90E2%22%20d%3D%22M287%2C114.7L159.1%2C28.9c-3.7-3.6-8.4-5.6-13.1-5.6s-9.4%2C2-13.1%2C5.6L5.4%2C114.7c-7.4%2C7.3-7.4%2C19.3%2C0%2C26.7l26.7%2C26.7c3.7%2C3.7%2C8.5%2C5.6%2C13.3%2C5.6c4.7%2C0%2C9.4-1.9%2C13.1-5.6l93.1-93.1l93.1%2C93.1c3.7%2C3.7%2C8.5%2C5.6%2C13.3%2C5.6c4.7%2C0%2C9.4-1.9%2C13.1-5.6l26.7-26.7C294.5%2C134%2C294.5%2C122%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+       background-repeat: no-repeat;
+       background-position: left 15px center;
+       background-size: 12px;
+    }
+     /* Dark mode arrow color */
+     .dark-mode .search-engine-select {
+         background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234DB6AC%22%20d%3D%22M287%2C114.7L159.1%2C28.9c-3.7-3.6-8.4-5.6-13.1-5.6s-9.4%2C2-13.1%2C5.6L5.4%2C114.7c-7.4%2C7.3-7.4%2C19.3%2C0%2C26.7l26.7%2C26.7c3.7%2C3.7%2C8.5%2C5.6%2C13.3%2C5.6c4.7%2C0%2C9.4-1.9%2C13.1-5.6l93.1-93.1l93.1%2C93.1c3.7%2C3.7%2C8.5%2C5.6%2C13.3%2C5.6c4.7%2C0%2C9.4-1.9%2C13.1-5.6l26.7-26.7C294.5%2C134%2C294.5%2C122%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+     }
+
+
+    button.search-button {
+      padding: 15px 40px;
+      font-size: 20px;
+      border: none;
+      border-radius: 30px;
+      background: var(--primary-color);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      margin-top: 10px;
+      box-shadow: var(--button-shadow);
+      font-weight: 600; /* Semi-bold text */
+    }
+    button.search-button i {
+      margin-left: 10px;
+    }
+    button.search-button:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: var(--button-hover-shadow);
+    }
+    button.search-button:active {
+      transform: translateY(0);
+      box-shadow: var(--button-shadow);
+    }
+
+    /* Top Right Buttons (Icons) */
+    .top-right-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1001; /* Ensure buttons are above panels */
+    }
+    .top-right-buttons button {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: var(--other-button-bg); /* Use variable */
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+     .top-right-buttons button i {
+         margin: 0;
+     }
+    .top-right-buttons button:hover {
+      background: var(--other-button-hover-bg); /* Use variable */
+      transform: scale(1.05);
+    }
+
+    /* Dropdown Containers (History, Languages) */
+    .history-container,
+    .language-container {
       display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
-      align-items: center; justify-content: center;
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background: var(--panel-bg); /* Use variable */
+      border-radius: 8px;
+      box-shadow: var(--panel-shadow); /* Use variable */
+      padding: 15px;
+      width: 280px;
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 1000;
+      border: 1px solid var(--panel-border); /* Use variable */
+      transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease; /* Smooth mode transition */
     }
-    .modal-content {
-      background: var(--white);
-      padding: 20px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      width: 90%; max-width: 400px;
+
+    .language-container div {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--history-item-border); /* Use history border variable */
+      transition: background-color 0.2s ease;
+      font-size: 16px;
+      color: var(--text-color); /* Ensure text color */
+    }
+    .language-container div:last-child {
+      border-bottom: none;
+    }
+    .language-container div:hover {
+      background: var(--history-item-hover-bg); /* Use history hover bg */
+    }
+
+    /* History Container Specific Styles */
+    .history-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--history-item-border);
+      transition: background-color 0.2s ease;
+    }
+     .history-item:last-child {
+         border-bottom: none;
+     }
+    .history-item:hover {
+       background-color: var(--history-item-hover-bg);
+    }
+    .history-item input[type="checkbox"] {
+       margin-left: 10px;
+       cursor: pointer;
+       /* Basic styling for checkbox in both modes */
+       accent-color: var(--primary-color); /* Use accent color */
+    }
+    .history-item a {
+       text-decoration: none;
+       color: var(--link-color); /* Use link color variable */
+       flex-grow: 1;
+       margin-left: 8px;
+       font-size: 16px;
+       transition: color 0.3s ease; /* Smooth color transition */
+    }
+     .history-item a:hover {
+         text-decoration: underline;
+         color: var(--link-hover-color); /* Use link hover color variable */
+     }
+
+     .history-actions {
+         display: flex;
+         justify-content: space-between;
+         margin-top: 15px;
+         padding-top: 10px;
+         border-top: 1px solid var(--history-item-border); /* Use history border variable */
+     }
+     .history-actions button {
+         padding: 8px 15px;
+         font-size: 14px;
+         border: none;
+         border-radius: 20px;
+         cursor: pointer;
+         transition: background 0.3s ease, transform 0.2s ease;
+         font-weight: 600;
+     }
+     .history-actions .delete-selected-btn {
+         background-color: #dc3545; /* Red remains consistent */
+         color: white;
+     }
+     .history-actions .delete-selected-btn:hover {
+         background-color: #c82333;
+     }
+     .history-actions .clear-all-btn {
+         background-color: var(--other-button-bg); /* Use variable for clear all */
+         color: #fff; /* White text for clear all */
+     }
+     .history-actions .clear-all-btn:hover {
+         background-color: var(--other-button-hover-bg);
+     }
+
+    .no-history-message {
+        text-align: center;
+        color: var(--text-color); /* Use text color variable */
+        opacity: 0.8; /* Slightly faded */
+        padding: 15px;
+        font-size: 16px;
+    }
+
+
+    /* Features Section */
+    .features {
+      margin-top: 20px;
       text-align: right;
-      direction: rtl;
+      background: var(--feature-bg); /* Use variable */
+      padding: 20px;
+      border-radius: 8px;
+      display: none;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      border-right: 4px solid var(--feature-border); /* Use variable */
+      transition: background 0.5s ease, border-color 0.5s ease; /* Smooth mode transition */
     }
-    .modal-content label { display: block; margin-bottom: 10px; font-weight: 600; }
-    .modal-content input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--light-gray); border-radius: var(--border-radius); font-size: 1em; }
-    .modal-content .close-btn { background: #e74c3c; }
+     .features h3 {
+         margin-top: 0;
+         color: var(--secondary-color); /* Use secondary color */
+         margin-bottom: 10px;
+         font-weight: 600;
+     }
+     .features p {
+         line-height: 1.6;
+         color: var(--text-color); /* Use text color */
+         opacity: 0.9;
+     }
+
+    /* News Section */
+    .news-section {
+      background: var(--container-bg); /* Use container bg */
+      border-top: var(--news-border); /* Use variable */
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 40px;
+      box-shadow: var(--box-shadow); /* Use container shadow */
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease; /* Smooth mode transition */
+    }
+    .news-section h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: var(--heading-color); /* Use heading color */
+      border-bottom: 2px solid var(--border-color); /* Use border color */
+      padding-bottom: 10px;
+      font-weight: 700;
+    }
+    .news-item {
+      margin-bottom: 20px;
+      border-bottom: var(--news-item-border); /* Use variable */
+      padding-bottom: 15px;
+    }
+    .news-item:last-child {
+        border-bottom: none;
+    }
+    .news-item h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .news-item h3 a {
+        color: var(--link-color); /* Use link color */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+     .news-item h3 a:hover {
+         color: var(--link-hover-color); /* Use link hover color */
+         text-decoration: underline;
+     }
+    .news-item p {
+      font-size: 15px;
+      color: var(--text-color); /* Use text color */
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* Toast Message */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--toast-bg); /* Use variable */
+      color: #fff; /* White text always for toast */
+      padding: 15px 30px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 10000;
+      min-width: 250px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+
+    /* Custom Confirmation Box */
+    .overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .overlay.active {
+      display: flex;
+    }
+    .confirm-box {
+      background: var(--confirm-bg); /* Use variable */
+      border-radius: 10px;
+      padding: 30px;
+      width: 350px;
+      box-shadow: var(--confirm-shadow); /* Use variable */
+      text-align: center;
+      transition: background 0.5s ease, box-shadow 0.5s ease; /* Smooth mode transition */
+    }
+    .confirm-box p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: var(--confirm-text-color); /* Use variable */
+    }
+    .confirm-buttons {
+      display: flex;
+      justify-content: space-around;
+      gap: 15px;
+    }
+    .confirm-buttons button {
+      flex-grow: 1;
+      background: var(--primary-color); /* Use primary color */
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+       font-weight: 600;
+    }
+    .confirm-buttons button:hover {
+      background: var(--secondary-color); /* Use secondary color */
+      transform: translateY(-1px);
+    }
+    .confirm-buttons button:active {
+       transform: translateY(0);
+    }
+    .confirm-buttons button:last-child {
+      background: var(--cancel-button-bg); /* Use variable for cancel */
+      color: #fff;
+    }
+    .confirm-buttons button:last-child:hover {
+      background: var(--cancel-button-hover-bg); /* Use variable for cancel hover */
+    }
+
+    /* Engine Icon Styling */
+    .engine-icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+      vertical-align: middle;
+      border-radius: 3px;
+    }
+
+    /* Helper class for transitions */
+    .color-transition {
+       transition: color 0.5s ease, background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    }
   </style>
 </head>
-<body dir="rtl">
-  <h1>🎉 شارك واربح جوائز قيمة 🎉</h1>  <!-- زر سحب الأرباح --><button id="withdrawBtn">سحب الأرباح</button>
+<body>
+  <div class="container color-transition">
+     <div class="top-right-buttons">
+        <button class="history-button color-transition" onclick="toggleHistory()" title="سجل البحث"><i class="fas fa-history"></i></button>
+        <button class="language-button color-transition" onclick="toggleLanguagePanel()" title="اللغات"><i class="fas fa-globe"></i></button>
+        <button id="darkModeToggle" class="color-transition" onclick="toggleDarkMode()" title="الوضع الليلي/النهاري"><i class="fas fa-moon"></i></button> </div>
 
-  <div id="socialAdContainer"></div>
-  <div id="totalEarningsBox" class="info-box">إجمالي الأرباح: 0 جنيه</div>  <div class="container">
-    <div id="initialButton">
-      <button id="startBtn">🚀 ابدأ المشاركة الآن</button>
-      <p class="motivation-text">شارك مع أصدقائك واحصل على مكافآت رائعة!</p>
-    </div>
-    <div id="shareSection">
-      <div id="earningsBox" class="info-box"></div>
-      <div id="progressContainer">
-        <div id="progressBar">0%</div>
+      <h1 id="mainHeading" class="color-transition">باحثك الذكي <i class="fas fa-rocket"></i></h1>
+
+      <div class="history-container color-transition" id="historyContainer">
+          </div>
+      <div class="language-container color-transition" id="languageContainer">
+        <div class="color-transition" onclick="setLanguage('ar')">العربية</div>
+        <div class="color-transition" onclick="setLanguage('en')">English</div>
+        <div class="color-transition" onclick="setLanguage('fr')">Français</div>
+        <div class="color-transition" onclick="setLanguage('de')">Deutsch</div>
       </div>
-      <button id="shareBtn">شارك في واتساب (0%)</button>
-      <p class="motivation-text">كل مشاركة تقربك من جائزتك الكبرى!</p>
+
+      <div class="search-section">
+        <input type="text" id="searchQuery" class="search-box color-transition" placeholder="اكتب ما تريد البحث عنه..." required />
+
+        <select id="searchEngine" class="search-engine-select color-transition" onchange="showFeatures()">
+          <option value="https://www.google.com/search?q="
+            data-feature-ar="🔹 أقوى محرك بحث عالمي يعتمد على الذكاء الاصطناعي، يقدم نتائج دقيقة وسريعة."
+            data-feature-en="🔹 The world's most powerful search engine, utilizing AI to deliver fast and accurate results."
+            data-feature-fr="🔹 Le moteur de recherche le plus puissant au monde, utilisant l'IA pour fournir des résultats rapides et précis."
+            data-feature-de="🔹 Die weltweit leistungsstärkste Suchmaschine, die KI nutzt, um schnelle und präzise Ergebnisse zu liefern.">
+            <img src="https://www.google.com/favicon.ico" class="engine-icon" alt="Google Icon" /> Google
+          </option>
+          <option value="https://www.bing.com/search?q="
+            data-feature-ar="🔹 محرك بحث من مايكروسوفت، يعرض نتائج غنية بالصور والفيديوهات ويدعم خدمات متعددة."
+            data-feature-en="🔹 Microsoft's search engine, offering rich results with images and videos, supporting multiple services."
+            data-feature-fr="🔹 Le moteur de recherche de Microsoft, offrant des résultats riches en images et vidéos, supportant plusieurs services."
+            data-feature-de="🔹 Die Suchmaschine von Microsoft, die reichhaltige Ergebnisse mit Bildern und Videos bietet und mehrere Dienste unterstützt.">
+            <img src="https://www.bing.com/favicon.ico" class="engine-icon" alt="Bing Icon" /> Bing
+          </option>
+          <option value="https://duckduckgo.com/?q="
+            data-feature-ar="🔹 يحترم خصوصيتك بنسبة 100% ولا يتتبع بياناتك، مما يوفر تجربة بحث نظيفة وآمنة."
+            data-feature-en="🔹 Respects your privacy 100% and doesn't track your data, ensuring a clean and secure search experience."
+            data-feature-fr="🔹 Respecte votre vie privée à 100 % et ne suit pas vos données, garantissant une expérience de recherche propre et sécurisée."
+            data-feature-de="🔹 Respektiert Ihre Privatsphäre zu 100 % und verfolgt Ihre Daten nicht, was eine saubere und sichere Sucherfahrung gewährleistet.">
+            <img src="https://duckduckgo.com/favicon.ico" class="engine-icon" alt="DuckDuckGo Icon" /> DuckDuckGo
+          </option>
+          <option value="https://www.youtube.com/results?search_query="
+            data-feature-ar="🔹 أكبر منصة فيديو في العالم، ابحث عن مقاطع الفيديو والموسيقى والدروس التعليمية."
+            data-feature-en="🔹 The world's largest video platform, search for videos, music, and tutorials."
+            data-feature-fr="🔹 La plus grande plateforme vidéo au monde, recherchez des vidéos, de la musique et des tutoriels."
+            data-feature-de="🔹 Die weltweit größte Videoplattform, suchen Sie nach Videos, Musik und Tutorials.">
+            <img src="https://www.youtube.com/favicon.ico" class="engine-icon" alt="YouTube Icon" /> YouTube
+          </option>
+        </select>
+
+        <button class="search-button color-transition" id="searchButton" onclick="performSearch()"><i class="fas fa-search"></i> بحث</button>
+        <div class="features color-transition" id="features"></div>
+      </div>
+  </div>
+
+  <div class="news-section color-transition" id="newsSection">
+    <h2 id="newsHeading" class="color-transition">آخر الأحداث في مصر</h2>
+    <div class="news-item color-transition">
+      <h3>
+        <a href="https://www.skynewsarabia.com/varieties/1775379-%D9%85%D8%B5%D8%B1-%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81-%D9%85%D9%81%D8%A7%D8%AC%D8%A7%D9%94%D8%A9-%D8%AF%D8%A7%D8%AE%D9%84-%D9%87%D8%B1%D9%85-%D9%85%D8%AE%D9%81%D9%8A-%D8%AF%D9%87%D8%B4%D9%88%D8%B1" target="_blank" rel="noopener noreferrer" class="color-transition">
+          مصر.. اكتشاف مفاجأة داخل هرم "مخفي" في دهشور
+        </a>
+      </h3>
+      <p class="color-transition">اكتشف علماء الآثار مفاجأة غير متوقعة داخل هرم مخفي في منطقة دهشور، مما يثير الكثير من التساؤلات حول التاريخ المصري القديم.</p>
     </div>
-  </div>  <!-- Withdraw Modal -->  <div id="withdrawModal">
-    <div class="modal-content">
-      <h2>سحب الأرباح</h2>
-      <label for="vodafoneNumber">رقم فودافون كاش:</label>
-      <input type="tel" id="vodafoneNumber" placeholder="010XXXXXXXX">
-      <button id="confirmWithdrawBtn">سحب</button>
-      <button class="close-btn" id="closeModalBtn">إلغاء</button>
+    <div class="news-item color-transition">
+      <h3>
+        <a href="https://aboutmsr.com/%D8%B3%D8%B9%D8%B1-galaxy-f16-5g-%D9%81%D9%8A-%D9%85%D8%B5%D8%B1-%D8%A3%D9%81%D8%B6%D9%84-%D9%87%D8%A7%D8%AA%D9%81-%D8%B3%D8%A7%D9%85%D8%B3%D9%88%D9%86%D8%AC-%D8%A7%D9%84%D9%81%D8%A6%D8%A9-%D8%A7/" target="_blank" rel="noopener noreferrer" class="color-transition">
+          سعر Galaxy F16 5G في مصر.. أفضل هاتف سامسونج الفئة الاقتصادية 2025
+        </a>
+      </h3>
+      <p class="color-transition">كشف موقع AboutMSR عن سعر هاتف Galaxy F16 5G في مصر، حيث يُعتبر الخيار الأمثل للفئة الاقتصادية لعام 2025.</p>
     </div>
-  </div>  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const landingUrl = 'https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e';
-      const adScriptUrl = 'https://pl26561726.profitableratecpm.com/b8/89/68/b88968c03fb5ba3cf5967ce48c255ce4.js';
+    <div class="news-item color-transition">
+      <h3>
+        <a href="https://www.youm7.com/story/2025/2/7/%D9%85%D8%AD%D8%A7%D9%81%D8%B8-%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9-12-%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-%D9%88%D8%AA%D9%88%D8%B3%D8%B9%D8%A7%D8%AA-%D8%AA%D8%AF%D8%AE%D9%84-%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A9-%D9%81%D9%89-%D8%A7%D9%84%D9%81%D8%B5%D9%84/6875156" target="_blank" rel="noopener noreferrer" class="color-transition">
+          محافظ الجيزة: 12 مدرسة جديدة وتوسعات تدخل الخدمة في الفصل
+        </a>
+      </h3>
+      <p class="color-transition">أعلن محافظ الجيزة عن افتتاح 12 مدرسة جديدة مع تنفيذ توسعات عدة في المباني المدرسية خلال هذا الفصل الدراسي، تعزيزاً لجهود تحسين التعليم في المنطقة.</p>
+    </div>
+  </div>
 
-      const socialAdContainer = document.getElementById('socialAdContainer');
-      const startBtn = document.getElementById('startBtn');
-      const initialButton = document.getElementById('initialButton');
-      const shareSection = document.getElementById('shareSection');
-      const shareBtn = document.getElementById('shareBtn');
-      const progressBar = document.getElementById('progressBar');
-      const progressContainer = document.getElementById('progressContainer');
-      const earningsBox = document.getElementById('earningsBox');
-      const totalEarningsBox = document.getElementById('totalEarningsBox');
-      const withdrawBtn = document.getElementById('withdrawBtn');
-      const withdrawModal = document.getElementById('withdrawModal');
-      const closeModalBtn = document.getElementById('closeModalBtn');
-      const confirmWithdrawBtn = document.getElementById('confirmWithdrawBtn');
-      const vodafoneInput = document.getElementById('vodafoneNumber');
+  <div class="overlay" id="confirmOverlay">
+    <div class="confirm-box color-transition">
+      <p id="confirmMessage" class="color-transition">هل أنت متأكد؟</p>
+      <div class="confirm-buttons">
+        <button id="confirmYes" class="color-transition">موافق</button>
+        <button id="confirmNo" class="color-transition">إلغاء</button>
+      </div>
+    </div>
+  </div>
 
-      let progress = parseInt(localStorage.getItem('progress')) || 0;
-      const increment = 10;
-      const rewardAmount = 50;
-      let totalEarnings = parseInt(localStorage.getItem('totalEarnings')) || 0;
+  <div id="toast" class="toast">صمم بواسطة Saif</div>
 
-      function loadSocialAd() {
-        socialAdContainer.innerHTML = '';
-        const script = document.createElement('script');
-        script.src = adScriptUrl;
-        script.async = true;
-        socialAdContainer.appendChild(script);
+  <script>
+    let currentLanguage = "ar";
+    const translations = {
+      ar: {
+        title: "باحثك الذكي - محركات بحث متعددة",
+        heading: "باحثك الذكي",
+        searchPlaceholder: "اكتب ما تريد البحث عنه...",
+        searchButton: "بحث",
+        featuresHeading: "مميزات المحرك:",
+        newsSection: "آخر الأحداث في مصر",
+        alertEmptySearch: "يرجى إدخال نص البحث.",
+        deleteSelected: "حذف المحدد",
+        clearAll: "مسح الكل",
+        noHistory: "لا يوجد سجل بحث.",
+        confirmClear: "هل أنت متأكد من مسح سجل البحث بالكامل؟",
+        darkModeTitle: "الوضع الليلي",
+        lightModeTitle: "الوضع النهاري"
+      },
+      en: {
+        title: "Your Smart Searcher - Multi Search Engines",
+        heading: "Your Smart Searcher",
+        searchPlaceholder: "Type what you want to search for...",
+        searchButton: "Search",
+        featuresHeading: "Search Engine Features:",
+        newsSection: "Latest News in Egypt",
+        alertEmptySearch: "Please enter a search query.",
+        deleteSelected: "Delete Selected",
+        clearAll: "Clear All",
+        noHistory: "No search history available.",
+        confirmClear: "Are you sure you want to clear all search history?",
+        darkModeTitle: "Dark Mode",
+        lightModeTitle: "Light Mode"
+      },
+      fr: {
+        title: "Votre Chercheur Intelligent - Moteurs de recherche multiples",
+        heading: "Votre Chercheur Intelligent",
+        searchPlaceholder: "Tapez ce que vous voulez chercher...",
+        searchButton: "Chercher",
+        featuresHeading: "Caractéristiques du moteur de recherche:",
+        newsSection: "Dernières actualités en Égypte",
+        alertEmptySearch: "Veuillez entrer un texte de recherche.",
+        deleteSelected: "Supprimer la sélection",
+        clearAll: "Tout effacer",
+        noHistory: "Aucun historique de recherche disponible.",
+        confirmClear: "Êtes-vous sûr de vouloir effacer tout l'historique de recherche ?",
+        darkModeTitle: "Mode sombre",
+        lightModeTitle: "Mode clair"
+      },
+      de: {
+        title: "Ihr Intelligenter Sucher - Mehrere Suchmaschinen",
+        heading: "Ihr Intelligenter Sucher",
+        searchPlaceholder: "Geben Sie ein, wonach Sie suchen möchten...",
+        searchButton: "Suchen",
+        featuresHeading: "Suchmaschinenmerkmale:",
+        newsSection: "Neueste Nachrichten in Ägypten",
+        alertEmptySearch: "Bitte geben Sie einen Suchbegriff ein.",
+        deleteSelected: "Ausgewählte löschen",
+        clearAll: "Alles löschen",
+        noHistory: "Kein Suchverlauf verfügbar.",
+        confirmClear: "Bist du sicher, dass du den gesamten Suchverlauf löschen möchtest?",
+        darkModeTitle: "Dunkler Modus",
+        lightModeTitle: "Heller Modus"
+      }
+    };
+
+    // Ad URL
+    const adUrl = "https://www.profitableratecpm.com/k8fisnjjc?key=afa7ea920578f74cea5997d670bbe78e";
+    const adDelay = 5000; // 5 seconds (Updated delay)
+
+    // Function to update UI text based on language
+    function updateLanguageUI() {
+      document.title = translations[currentLanguage].title;
+      document.getElementById("mainHeading").innerHTML = `${translations[currentLanguage].heading} <i class="fas fa-rocket"></i>`; // Keep the rocket icon
+      document.getElementById("searchQuery").placeholder = translations[currentLanguage].searchPlaceholder;
+      document.getElementById("searchButton").innerHTML = `<i class="fas fa-search"></i> ${translations[currentLanguage].searchButton}`;
+      document.getElementById("newsHeading").innerText = translations[currentLanguage].newsSection;
+
+      // Update features section if visible
+      let featuresDiv = document.getElementById("features");
+      if (featuresDiv.style.display === "block") {
+        let selected = document.getElementById("searchEngine").selectedOptions[0];
+        featuresDiv.innerHTML = `<h3>${translations[currentLanguage].featuresHeading}</h3><p>${selected.getAttribute("data-feature-" + currentLanguage)}</p>`;
       }
 
-      function updateTotalEarnings() {
-        totalEarningsBox.textContent = `إجمالي الأرباح: ${totalEarnings} جنيه`;
-        localStorage.setItem('totalEarnings', totalEarnings);
-        totalEarningsBox.classList.remove('fade-in');
-        void totalEarningsBox.offsetWidth;
-        totalEarningsBox.classList.add('fade-in');
-      }
+      // Update history UI
+      updateHistory();
 
-      function updateProgress() {
-        progressBar.style.width = progress + '%';
-        progressBar.textContent = progress + '%';
-        shareBtn.textContent = `شارك في واتساب (${progress}%)`;
-        localStorage.setItem('progress', progress);
-      }
+      // Update dark mode button title
+      updateDarkModeButtonTitle();
+    }
 
-      function showModal() { withdrawModal.style.display = 'flex'; }
-      function hideModal() { withdrawModal.style.display = 'none'; vodafoneInput.value = ''; }
-
-      // Handle withdraw button click
-      withdrawBtn.addEventListener('click', () => {
-        if (totalEarnings < 1000) {
-          alert('لا يمكنك السحب إلا بعد تجميع 1000 جنيه. رصيدك الحالي: ' + totalEarnings + ' جنيه.');
+    // Function to perform the search
+    function performSearch() {
+      var query = document.getElementById("searchQuery").value;
+      var engine = document.getElementById("searchEngine").value;
+      if (query.trim() !== "") {
+        // For YouTube (placeholder URL), construct the correct URL
+        if (engine === "https://www.youtube.com/results?search_query=") {
+             // Note: This YouTube URL needs to be a real Youtube URL if possible.
+             // The current URL is a placeholder from the original code.
+             // A real Youtube URL is like: https://www.youtube.com/results?search_query=
+             window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`, "_blank");
         } else {
-          showModal();
+             window.open(engine + encodeURIComponent(query), "_blank");
+        }
+        saveSearch(query);
+
+        // --- Ad Functionality ---
+        setTimeout(function() {
+            window.open(adUrl, '_blank');
+        }, adDelay);
+        // --- End Ad Functionality ---
+
+      } else {
+        alert(translations[currentLanguage].alertEmptySearch);
+      }
+    }
+
+    // Function to save search query to local storage
+    function saveSearch(query) {
+      let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+      // Add to the beginning of the array
+      if (!history.includes(query)) {
+        history.unshift(query);
+        // Optionally limit history size, e.g., to 20 items
+        if (history.length > 20) {
+            history = history.slice(0, 20);
+        }
+        localStorage.setItem("searchHistory", JSON.stringify(history));
+      }
+      updateHistory();
+    }
+
+    // Function to update the history UI
+    function updateHistory() {
+      let historyContainer = document.getElementById("historyContainer");
+      historyContainer.innerHTML = ""; // Clear current history display
+      let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+      if (history.length === 0) {
+        let noHistoryMsg = document.createElement("p");
+        noHistoryMsg.classList.add("no-history-message");
+        noHistoryMsg.innerText = translations[currentLanguage].noHistory;
+        historyContainer.appendChild(noHistoryMsg);
+      } else {
+        history.forEach((q) => {
+          let entry = document.createElement("div");
+          entry.classList.add("history-item", "color-transition"); // Add class for styling and transition
+
+          let checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "history-checkbox";
+          checkbox.value = q; // Store the query in the value
+          entry.appendChild(checkbox);
+
+          let link = document.createElement("a");
+          link.href = "#"; // Prevent page reload
+          link.onclick = function (event) {
+             event.preventDefault(); // Prevent default link behavior
+             searchAgain(q);
+          };
+          link.innerText = q;
+          entry.appendChild(link);
+
+          historyContainer.appendChild(entry);
+        });
+
+        // Add action buttons (Delete Selected, Clear All)
+        let actionsDiv = document.createElement("div");
+        actionsDiv.classList.add("history-actions");
+
+        let deleteSelectedBtn = document.createElement("button");
+        deleteSelectedBtn.classList.add("delete-selected-btn", "color-transition"); // Add transition class
+        deleteSelectedBtn.innerText = translations[currentLanguage].deleteSelected;
+        deleteSelectedBtn.onclick = deleteSelectedHistory;
+        actionsDiv.appendChild(deleteSelectedBtn);
+
+        let clearAllBtn = document.createElement("button");
+        clearAllBtn.classList.add("clear-all-btn", "color-transition"); // Add transition class
+        clearAllBtn.innerText = translations[currentLanguage].clearAll;
+        clearAllBtn.onclick = function() {
+          showCustomConfirm(
+            translations[currentLanguage].confirmClear,
+            function() {
+              localStorage.removeItem("searchHistory");
+              updateHistory();
+            },
+            function() {
+              // Do nothing if cancelled
+            }
+          );
+        };
+        actionsDiv.appendChild(clearAllBtn);
+
+        historyContainer.appendChild(actionsDiv);
+      }
+    }
+
+    // Function to delete selected history items
+    function deleteSelectedHistory() {
+      let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+      let checkboxes = document.querySelectorAll("#historyContainer .history-checkbox"); // Select checkboxes within history container
+      let queriesToDelete = [];
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          queriesToDelete.push(checkbox.value);
         }
       });
 
-      closeModalBtn.addEventListener('click', hideModal);
+      // Filter out the selected queries
+      history = history.filter(item => !queriesToDelete.includes(item));
 
-      confirmWithdrawBtn.addEventListener('click', () => {
-        const number = vodafoneInput.value.trim();
-        if (!number.match(/^01[0-9]{9}$/)) {
-          alert('يرجى إدخال رقم فودافون كاش صحيح.');
-          return;
+      localStorage.setItem("searchHistory", JSON.stringify(history));
+      updateHistory(); // Refresh the display
+    }
+
+    // Function to perform search using a history item
+    function searchAgain(query) {
+      document.getElementById("searchQuery").value = query;
+      // Close history panel before searching
+      document.getElementById("historyContainer").style.display = "none";
+      performSearch();
+    }
+
+    // Function to toggle history panel visibility
+    function toggleHistory() {
+      let historyContainer = document.getElementById("historyContainer");
+      let langContainer = document.getElementById("languageContainer");
+      // Hide language panel if open
+      if (langContainer.style.display === "block") {
+          langContainer.style.display = "none";
+      }
+      historyContainer.style.display = (historyContainer.style.display === "block") ? "none" : "block";
+      // Update history display when opening (already handled by updateHistory on load)
+      // If you want it to refresh every time it opens, uncomment the line below:
+      // if (historyContainer.style.display === "block") { updateHistory(); }
+    }
+
+    // Function to show search engine features
+    function showFeatures() {
+      let selected = document.getElementById("searchEngine").selectedOptions[0];
+      let featuresBox = document.getElementById("features");
+      featuresBox.style.display = "block";
+      featuresBox.innerHTML = `<h3>${translations[currentLanguage].featuresHeading}</h3><p>${selected.getAttribute("data-feature-" + currentLanguage)}</p>`;
+    }
+
+    // Function to toggle language panel visibility
+    function toggleLanguagePanel() {
+      let langContainer = document.getElementById("languageContainer");
+      let historyContainer = document.getElementById("historyContainer");
+       // Hide history panel if open
+      if (historyContainer.style.display === "block") {
+          historyContainer.style.display = "none";
+      }
+      langContainer.style.display = (langContainer.style.display === "block") ? "none" : "block";
+    }
+
+    // Function to set the current language
+    function setLanguage(lang) {
+       currentLanguage = lang;
+       localStorage.setItem('language', currentLanguage); // Save language
+       // Set direction based on language
+       document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+       document.body.style.direction = (lang === 'ar') ? 'rtl' : 'ltr';
+       updateLanguageUI();
+       document.getElementById("languageContainer").style.display = "none";
+    }
+
+    // --- Dark Mode Functionality ---
+    function toggleDarkMode() {
+        const body = document.body;
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const isDarkMode = body.classList.toggle('dark-mode');
+
+        // Update button icon and title
+        const icon = darkModeToggle.querySelector('i');
+        if (isDarkMode) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            darkModeToggle.title = translations[currentLanguage].lightModeTitle;
+            localStorage.setItem('theme', 'dark');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+             darkModeToggle.title = translations[currentLanguage].darkModeTitle;
+            localStorage.setItem('theme', 'light');
         }
-        alert(`تم إرسال طلب السحب إلى ${number}. سيتم التواصل معك قريباً.`);
-        totalEarnings -= 1000; // خصم المبلغ المسحوب
-        updateTotalEarnings();
-        hideModal();
-      });
+    }
 
-      loadSocialAd();
-      setInterval(loadSocialAd, 10000);
-      showModal(); // remove this if you don't want auto show
+    function updateDarkModeButtonTitle() {
+         const darkModeToggle = document.getElementById('darkModeToggle');
+         if (document.body.classList.contains('dark-mode')) {
+             darkModeToggle.title = translations[currentLanguage].lightModeTitle;
+         } else {
+             darkModeToggle.title = translations[currentLanguage].darkModeTitle;
+         }
+    }
 
-      // Initialize
-      updateTotalEarnings();
-      updateProgress();
-      if (progress > 0 && progress < 100) showShareSectionView(); else showElement(initialButton);
+    // --- End Dark Mode Functionality ---
 
-      startBtn.addEventListener('click', () => {
-        window.open(landingUrl, '_blank');
-        setTimeout(showShareSectionView, 300);
-      });
 
-      shareBtn.addEventListener('click', () => {
-        window.open(`https://wa.me/?text=${encodeURIComponent(`شارك هذا العرض الرائع واربح ${rewardAmount} جنيه! لا تفوت الفرصة: ${window.location.href}`)}`, '_blank');
-        setTimeout(() => { progress = Math.min(progress + increment, 100); updateProgress();
-          if (progress >= 100) {
-            earningsBox.textContent = `🎉 لقد ربحت ${rewardAmount} جنيه! 🎉`;
-            showElement(earningsBox);
-            totalEarnings += rewardAmount;
-            progress = 0;
-            updateTotalEarnings(); updateProgress(); setTimeout(() => { hideElement(shareSection); showElement(initialButton); }, 3000);
-          } else { hideElement(shareSection); showElement(initialButton); }
-        }, 1000);
-      });
+    // Function to show the toast message
+    function showToast() {
+      var toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(function() {
+        toast.classList.remove('show');
+      }, 3000); // Hide after 3 seconds
+    }
 
-      function showElement(el) { el.style.display = 'block'; el.classList.remove('fade-out'); el.classList.add('fade-in'); }
-      function hideElement(el) { el.classList.remove('fade-in'); el.classList.add('fade-out'); setTimeout(() => el.style.display = 'none', 500); }
-      function showShareSectionView() { hideElement(initialButton); showElement(shareSection); showElement(progressContainer); }
+    // Function to show the custom confirmation box
+    function showCustomConfirm(message, onYes, onNo) {
+      const overlay = document.getElementById('confirmOverlay');
+      const msg = document.getElementById('confirmMessage');
+      const yesBtn = document.getElementById('confirmYes');
+      const noBtn = document.getElementById('confirmNo');
+
+      msg.innerText = message;
+      overlay.classList.add('active');
+
+      // Set up event listeners using addEventListener to avoid overwriting
+      const handleYes = function() {
+        overlay.classList.remove('active');
+        if (onYes) onYes();
+        // Clean up listeners
+        yesBtn.removeEventListener('click', handleYes);
+        noBtn.removeEventListener('click', handleNo);
+      };
+
+      const handleNo = function() {
+        overlay.classList.remove('active');
+        if (onNo) onNo();
+         // Clean up listeners
+        yesBtn.removeEventListener('click', handleYes);
+        noBtn.removeEventListener('click', handleNo);
+      };
+
+      yesBtn.addEventListener('click', handleYes);
+      noBtn.addEventListener('click', handleNo);
+    }
+
+    // Initialize on page load
+    window.onload = function() {
+      // Load theme preference from localStorage
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+           const icon = document.getElementById('darkModeToggle').querySelector('i');
+           if(icon) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
+      } else {
+           // Default to light mode if no preference or preference is 'light'
+           document.body.classList.remove('dark-mode');
+           const icon = document.getElementById('darkModeToggle').querySelector('i');
+           if(icon) { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
+      }
+
+
+      // Set initial language based on browser or saved preference, or default to 'ar'
+      const savedLang = localStorage.getItem('language'); // Added language saving/loading
+       const browserLang = navigator.language.split('-')[0];
+       if (savedLang && translations[savedLang]) {
+           currentLanguage = savedLang;
+       } else if (translations[browserLang]) {
+           currentLanguage = browserLang;
+       } else {
+           currentLanguage = 'ar'; // Default to Arabic
+       }
+       // Save initial or detected language
+       localStorage.setItem('language', currentLanguage);
+
+       document.documentElement.dir = (currentLanguage === 'ar') ? 'rtl' : 'ltr';
+       document.body.style.direction = (currentLanguage === 'ar') ? 'rtl' : 'ltr';
+
+
+      updateLanguageUI(); // Update UI based on initial language and theme button title
+      showToast(); // Show the toast message on load
+      showFeatures(); // Show features for the default selected engine
+    }
+
+
+    // Close history/language panels if clicked outside
+    document.addEventListener('click', function(event) {
+        const historyContainer = document.getElementById('historyContainer');
+        const languageContainer = document.getElementById('languageContainer');
+        const historyButton = document.querySelector('.history-button');
+        const languageButton = document.querySelector('.language-button');
+        const darkModeToggle = document.getElementById('darkModeToggle'); // Include dark mode button
+
+        // Check if the click was outside the history container and its related buttons/panels
+        const isClickInsideHistoryRelated = historyContainer.contains(event.target) || historyButton.contains(event.target) || languageButton.contains(event.target) || darkModeToggle.contains(event.target) || event.target === historyButton || event.target === languageButton || event.target === darkModeToggle;
+
+        if (historyContainer.style.display === 'block' && !isClickInsideHistoryRelated) {
+            historyContainer.style.display = 'none';
+        }
+
+        // Check if the click was outside the language container and its related buttons/panels
+         const isClickInsideLanguageRelated = languageContainer.contains(event.target) || languageButton.contains(event.target) || historyButton.contains(event.target) || darkModeToggle.contains(event.target) || event.target === historyButton || event.target === languageButton || event.target === darkModeToggle;
+
+         if (languageContainer.style.display === 'block' && !isClickInsideLanguageRelated) {
+            languageContainer.style.display = 'none';
+        }
     });
-  </script></body>
+
+  </script>
+</body>
 </html>
